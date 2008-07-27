@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 56;    # last test to print
+use Test::More tests => 57;    # last test to print
 
 use Naming::Convention qw/naming renaming default_convention
   default_keep_uppers/;
@@ -126,3 +126,7 @@ is( renaming('FOO123Bar234'),
     'foo123_bar234',
     'renaming FOO123Bar with default convention will get foo123_bar' );
 
+# test for the last letter is 's', with previous
+is( renaming('UpdateCFs'),
+    'update_cfs',
+    'renaming UpdateCFs with default convention will get update_cfs' );

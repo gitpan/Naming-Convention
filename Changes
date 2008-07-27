@@ -6,3 +6,5 @@ Revision history for Naming-Convention
        bug fixes for renaming sub
 0.0.3  Sun Jul 27 13:38:53 CST 2008
        bug fixes version
+0.0.4  Sun Jul 27 21:06:57 CST 2008
+       try to make perlcritic happier

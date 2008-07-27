@@ -7,7 +7,7 @@ use Carp;
 use base qw/Exporter/;
 our @EXPORT_OK = qw/naming renaming default_convention default_keep_uppers/;
 
-our $VERSION = '0.0.3';
+our $VERSION = '0.0.4';
 
 my @_valid_conventions = ( '_', '-', 'UpperCamelCase', 'lowerCamelCase' );
 my $_default_convention = '_';
@@ -171,6 +171,8 @@ sub renaming {
             # second step: fooBarBaz => foo_bar_baz
             $name =~ s/([A-Z]+)([A-Z])/(ucfirst lc $1 ) . $2/ge;
             $name =~ s/([^A-Z])([A-Z])/$1 . $convention . lc $2/ge;
+            # tr all the weirdly left [A-Z]
+            $name =~ tr/A-Z/a-z/;
         }
         else {
             my $from = 'UpperCamelCase';
@@ -199,7 +201,7 @@ Naming::Convention - Naming or Renaming( for identifiers, mostly )
 
 =head1 VERSION
 
-This document describes Naming::Convention version 0.0.3
+This document describes Naming::Convention version 0.0.4
 
 
 =head1 SYNOPSIS
