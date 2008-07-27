@@ -7,7 +7,7 @@ use Carp;
 use base qw/Exporter/;
 our @EXPORT_OK = qw/naming renaming default_convention default_keep_uppers/;
 
-our $VERSION = '0.0.2';
+our $VERSION = '0.0.3';
 
 my @_valid_conventions = ( '_', '-', 'UpperCamelCase', 'lowerCamelCase' );
 my $_default_convention = '_';
@@ -144,8 +144,9 @@ sub renaming {
 
     if ( $name =~ /(_)/ || $name =~ /(-)/ ) {
         my $from = $1;
-        if ( $convention ne $from
-            && ( $convention eq '_' || $convention eq '-' ) )
+        return $name if $convention eq $from;
+
+        if ( ( $convention eq '_' || $convention eq '-' ) )
         {
             $name =~ s/$from/$convention/g;
             return $name;
@@ -198,7 +199,7 @@ Naming::Convention - Naming or Renaming( for identifiers, mostly )
 
 =head1 VERSION
 
-This document describes Naming::Convention version 0.0.2
+This document describes Naming::Convention version 0.0.3
 
 
 =head1 SYNOPSIS
@@ -209,7 +210,7 @@ This document describes Naming::Convention version 0.0.2
             { convention => 'UpperCamelCase'} ); # got FooBarBaz
     my $new_name = renaming( 'FooBarBaz' ); # got foo_bar_baz
     $new_name = renaming( 'FooBarBaz',
-            { convention => 'lowerCamelCase' ); # got fooBarBaz
+            { convention => 'lowerCamelCase' } ); # got fooBarBaz
 
 
 =head1 DESCRIPTION
