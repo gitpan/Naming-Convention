@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 45;    # last test to print
+use Test::More tests => 48;    # last test to print
 
 use Naming::Convention qw/naming renaming default_convention
   default_keep_uppers/;
@@ -80,4 +80,15 @@ is( renaming( 'FOOBarBaz', { convention => 'lowerCamelCase' } ), 'fooBarBaz',
 is( default_convention( '_' ), '_', 'set default convention to _' );
 is( renaming( 'FOOBarBaz' ), 'foo_bar_baz',
 'renaming FooBarBaz with default convention will get foo_bar_baz' );
+
+is(renaming( 'FooBarSSL' ), 'foo_bar_ssl',
+        'renaming FooBarSSL with default convention will get foo_bar_ssl' );
+
+# with numbers
+is( renaming('FooBarSSL1234'), 'foo_bar_ssl1234',
+    'renaming FooBarSSL1234 with default convention will get foo_bar_ssl_1234'
+);
+
+is(renaming( 'FOO123Bar234' ), 'foo123_bar234',
+        'renaming FOO123Bar with default convention will get foo123_bar' );
 

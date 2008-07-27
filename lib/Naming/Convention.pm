@@ -7,7 +7,7 @@ use Carp;
 use base qw/Exporter/;
 our @EXPORT_OK = qw/naming renaming default_convention default_keep_uppers/;
 
-our $VERSION = '0.0.1';
+our $VERSION = '0.0.2';
 
 my @_valid_conventions = ( '_', '-', 'UpperCamelCase', 'lowerCamelCase' );
 my $_default_convention = '_';
@@ -130,7 +130,7 @@ sub renaming {
     my $option      = shift;
     my $convention  = $_default_convention;
 
-    if ($option) {
+    if ( $option && ref $option eq 'HASH' ) {
 
         # the last element is option
         if ( _is_valid_convention( $option->{convention} ) ) {
@@ -158,8 +158,13 @@ sub renaming {
     }
     else {
         if ( $convention eq '_' || $convention eq '-' ) {
+            # massage the first word, FOOBar => fooBar
             $name =~ s/^([A-Z])([^A-Z])/lc( $1 ) . $2/e;
             $name =~ s/^([A-Z]+)(?![a-z])/lc $1/e;
+
+            # massage the last word, FooBAR => FooBar
+            $name =~ s/(?<=[A-Z])([A-Z]+(\d+)?)$/lc( $1 )/e;
+
             # e.g. fooBARBaz => foo_bar_baz
             # first step: fooBARBaz => fooBarBaz
             # second step: fooBarBaz => foo_bar_baz
@@ -193,7 +198,7 @@ Naming::Convention - Naming or Renaming( for identifiers, mostly )
 
 =head1 VERSION
 
-This document describes Naming::Convention version 0.0.1
+This document describes Naming::Convention version 0.0.2
 
 
 =head1 SYNOPSIS
