@@ -8,3 +8,5 @@ Revision history for Naming-Convention
        bug fixes version
 0.0.4  Sun Jul 27 21:06:57 CST 2008
        try to make perlcritic happier
+0.0.5  Mon Jul 28 08:51:57 CST 2008
+       removed perlcritic.t, because it weirdly bit some testers
